@@ -4,6 +4,7 @@ const secondElement = document.querySelector(".second");
 const yearElement = document.querySelector(".year");
 const dateElement = document.querySelector(".date");
 const dayElement = document.querySelector(".day");
+const timeFormate = document.querySelector(".timeFormate");
 const getValue = document.querySelector("#getvalue");
 
 let todoList = [];
@@ -22,13 +23,22 @@ setTimeout(() => {
 function updateClock() {
   const currentDate = new Date();
   const getMinute = currentDate.getMinutes().toString().padStart(2, "0");
-  const getHour = currentDate.getHours().toString().padStart(2, "0");
+  let getHour = currentDate.getHours();
   const getSeconds = currentDate.getSeconds().toString().padStart(2, "0");
   const getYear = currentDate.getFullYear();
   const todayDate = currentDate.getDate().toString().padStart(2, "0");
 
   const dayIndex = currentDate.getDay();
   const todayName = daysOfWeek[dayIndex];
+
+  //am pm update
+
+  if (getHour >= 12) {
+    getHour = getHour - 12;
+    timeFormate.innerHTML = "PM";
+  } else {
+    timeFormate.innerHTML = "AM";
+  }
 
   hourElement.innerHTML = getHour;
   minuteElement.innerHTML = getMinute;
@@ -66,6 +76,7 @@ function addListItem(item) {
   newDiv.classList.add("todoList");
 
   // Set text content for the paragraph and button
+  pTag.classList.add("listContent");
   pTag.textContent = item;
   buttonTag.textContent = "X";
 
@@ -129,6 +140,25 @@ getValue.addEventListener("keydown", (event) => {
     setItem();
   }
 });
+
+//edit list and update function
+/* 
+function editToDolist() {
+  let a=document.querySelectorAll('.listContent')
+a.forEach((list,index)=>{
+
+  list.addEventListener('click',()=>{
+    list.setAttribute("contenteditable", "true")
+  })
+todoList[index]=list.textContent
+  
+localStorage.setItem('ModernTodos',JSON.stringify(todoList))
+})
+
+
+}
+setInterval(handleToDolist,1000)
+handleToDolist() */
 
 // Initial application setup
 makeList();

@@ -33,9 +33,16 @@ function updateClock() {
 
   //am pm update
 
+  console.log(getHour);
+
   if (getHour >= 12) {
-    getHour = getHour - 12;
+    if (getHour !== 12) {
+      getHour = getHour - 12;
+    }
     timeFormate.innerHTML = "PM";
+  } else if (getHour === 0) {
+    timeFormate.innerHTML = "AM";
+    getHour = 12;
   } else {
     timeFormate.innerHTML = "AM";
   }
@@ -57,6 +64,11 @@ function setItem() {
     getValue.value = "";
     makeList();
     Watch();
+  } else {
+    alert(
+      "Now you can edit lists by clicking on them || Click Add Now button if you want to save the edited list"
+    );
+    editToDolist();
   }
 }
 
@@ -142,23 +154,19 @@ getValue.addEventListener("keydown", (event) => {
 });
 
 //edit list and update function
-/* 
+
 function editToDolist() {
-  let a=document.querySelectorAll('.listContent')
-a.forEach((list,index)=>{
+  const lists = document.querySelectorAll(".listContent");
+  lists.forEach((list, index) => {
+    list.addEventListener("click", () => {
+      list.setAttribute("contenteditable", "true");
+    });
+    todoList[index] = list.textContent;
 
-  list.addEventListener('click',()=>{
-    list.setAttribute("contenteditable", "true")
-  })
-todoList[index]=list.textContent
-  
-localStorage.setItem('ModernTodos',JSON.stringify(todoList))
-})
-
-
+    localStorage.setItem("ModernTodos", JSON.stringify(todoList));
+  });
 }
-setInterval(handleToDolist,1000)
-handleToDolist() */
+//setInterval(editToDolist,1000)
 
 // Initial application setup
 makeList();

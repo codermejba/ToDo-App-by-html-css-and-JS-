@@ -65,9 +65,6 @@ function setItem() {
     makeList();
     Watch();
   } else {
-    alert(
-      "Now you can edit lists by clicking on them || Click Add Now button if you want to save the edited list"
-    );
     editToDolist();
   }
 }
